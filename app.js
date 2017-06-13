@@ -12,14 +12,18 @@ var locals = {
     people: [ {name: 'Grace'}, {name: 'Sarah'}, {name: 'Hermione'}]
   };
 
-nunjucks.configure(['views']);
+app.set('view engine', 'html');
+app.engine('html', nunjucks.render);
+nunjucks.configure('views', {noCache: true});
+
 nunjucks.render('index.html', locals, function (err, output) {
     if (err) throw err;
     console.log(output);
   });
 
 app.get('/', function (req, res) {
-  res.send('hi!');
+  res.render('index', locals);
+  //res.send('hi!');
 });
 
 
